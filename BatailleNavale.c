@@ -74,16 +74,21 @@ void afficherGrilleFinale(int mer[10][10], char grille[10][10]) {
       "Legende : X = Touche | O = Rate | B = Bateau non trouve | . = Vide\n");
 }
 
-void tirer(int mer[10][10], char grille[10][10], int ligne, int colonne) {
+int tirer(int mer[10][10], char grille[10][10], int ligne, int colonne) {
+  int tir;
   if (grille[ligne][colonne] != '.') {
     printf("\n[!] Vous avez deja tire sur cette case !\n");
+    tir = 0;
   } else if (mer[ligne][colonne] == 1) {
     printf("\n[OK] Touche !\n");
     grille[ligne][colonne] = 'X';
+    tir = 1;
   } else {
     printf("\n[X] Rate !\n");
     grille[ligne][colonne] = 'O';
+    tir = 1;
   }
+  return tir;
 }
 
 int tousBateauxTrouves(int score) {
@@ -151,6 +156,7 @@ void jouerPartie() {
   int ligne, colonne;
   int score = 0;
   int essaisRestants, choix;
+  int tir;
 
   choix = choisirDifficulte();
   essaisRestants = choix;
@@ -171,16 +177,14 @@ void jouerPartie() {
       }
     } while (ligne < 0 || ligne > 9 || colonne < 0 || colonne > 9);
 
-    if (grille[ligne][colonne] != '.') {
-      printf("Case deja jouee ! Choisissez une autre case.\n");
-    } else {
-      tirer(mer, grille, ligne, colonne);
-      if (grille[ligne][colonne] == 'X') {
-        score++;
-      }
-      essaisRestants--;
-      afficherStatistiques(score, essaisRestants, choix);
+    tir = tirer(mer, grille, ligne, colonne);
+    if (grille[ligne][colonne] == 'X') {
+      score++;
     }
+    if (tir == 1) {
+      essaisRestants--;
+    }
+    afficherStatistiques(score, essaisRestants, choix);
   }
 
   printf("\n====================================\n");
