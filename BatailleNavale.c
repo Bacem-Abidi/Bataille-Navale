@@ -96,7 +96,7 @@ int tousBateauxTrouves(int score) {
 void afficherStatistiques(int score, int essaisRestants, int choix) {
   printf("+-----------------------------------+\n");
   printf("| Bateaux trouves : %d / 5           |\n", score);
-  printf("| Essais restants : %d  / %d         |\n", essaisRestants, choix);
+  printf("| Essais restants : %d / %d          |\n", essaisRestants, choix);
   printf("+-----------------------------------+\n");
 }
 
